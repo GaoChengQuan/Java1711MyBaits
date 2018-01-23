@@ -11,6 +11,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import com.situ.mybatis.dao.IStudentDao;
+import com.situ.mybatis.dao.impl.StudentDaoImpl;
 import com.situ.mybatis.entity.Student;
 import com.situ.mybatis.utils.MyBatisUtil;
 
@@ -90,5 +92,21 @@ public class MyBatisTest {
 		sqlSession.commit();
 		sqlSession.close();
 	}
+	
+	@Test
+	public void test1() {
+		IStudentDao studentDao = new StudentDaoImpl();
+		Student student = studentDao.findById(11);
+		System.out.println(student);
+	}
+	
+	@Test
+public void test2() {
+	SqlSession sqlSession = MyBatisUtil.getSqlSession();
+	//IStudentDao studentDao = new StudentDaoImpl();
+	IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+	Student student = studentDao.findById(11);
+	System.out.println(student);
+}
 	
 }
