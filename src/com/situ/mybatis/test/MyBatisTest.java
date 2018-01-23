@@ -3,7 +3,9 @@ package com.situ.mybatis.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -15,6 +17,7 @@ import com.situ.mybatis.dao.IStudentDao;
 import com.situ.mybatis.dao.impl.StudentDaoImpl;
 import com.situ.mybatis.entity.Student;
 import com.situ.mybatis.utils.MyBatisUtil;
+import com.situ.mybatis.vo.SearchVO;
 
 public class MyBatisTest {
 	@Test
@@ -101,12 +104,67 @@ public class MyBatisTest {
 	}
 	
 	@Test
-public void test2() {
-	SqlSession sqlSession = MyBatisUtil.getSqlSession();
-	//IStudentDao studentDao = new StudentDaoImpl();
-	IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
-	Student student = studentDao.findById(11);
-	System.out.println(student);
-}
+	public void test2() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		//IStudentDao studentDao = new StudentDaoImpl();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		Student student = studentDao.findById(11);
+		System.out.println(student);
+	}
 	
+	@Test
+	public void testFindBySearchVO() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		SearchVO searchVO = new SearchVO();
+		Student student = new Student();
+		student.setName("李");
+		searchVO.setStudent(student);
+		List<Student> list = studentDao.findBySearchVO(searchVO);
+		for (Student stu : list) {
+			System.out.println(stu);
+		}
+	}
+	
+	@Test
+	public void testFindByPage() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		//IStudentDao studentDao = new StudentDaoImpl();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("offset", 3);
+		map.put("pageSize", 3);
+		List<Student> list = studentDao.findByPage1(map);
+		for (Student stu : list) {
+			System.out.println(stu);
+		}
+	}
+	
+	@Test
+	public void testFindByPage1() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		List<Student> list = studentDao.findByPage(3, 3);
+		for (Student stu : list) {
+			System.out.println(stu);
+		}
+	}
+	
+	@Test
+	public void testCount() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		Integer count = studentDao.count();
+		System.out.println(count);
+	}
+	
+	@Test
+	public void testFindAll2() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		List<Student> list = studentDao.findAll();
+		for (Student student : list) {
+			System.out.println(student);
+		}
+	}
 }

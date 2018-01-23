@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="Banji" type="com.situ.mybatis.entity.Banji"/> -->
 		<!-- 扫描包里面的类，批量起别名，别名即为类名，别名不区分大小写 -->
 		<package name="com.situ.mybatis.entity"/>
+		<package name="com.situ.mybatis.vo"/>
 		<!-- <package name="其他包"/> -->
 	</typeAliases>
 	
