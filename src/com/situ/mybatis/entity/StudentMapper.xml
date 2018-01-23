@@ -8,4 +8,34 @@
 	<select id="findById" parameterType="java.lang.Integer" resultType="com.situ.mybatis.entity.Student">
 		select * from student where id=#{id}
 	</select>
+	
+	<!-- 查找所有 -->
+	<!--resultType理论上应该是List<Student>,但是只要写List里面的类型就可以了  -->
+	<select id="findAll" resultType="com.situ.mybatis.entity.Student">
+		SELECT * FROM student
+	</select>
+	
+	<!-- 根据名字模糊查找 -->
+	<select id="findByName" parameterType="string" resultType="com.situ.mybatis.entity.Student">
+		SELECT * FROM student WHERE NAME LIKE '%${value}%'
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="save" parameterType="com.situ.mybatis.entity.Student">
+		INSERT INTO student(NAME,age,gender,address)
+		VALUES(#{name},#{age},#{gender},#{address});
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
