@@ -55,4 +55,40 @@ public class MyBatisTest {
 		sqlSession.close();
 	}
 	
+	@Test
+	public void testDeleteById() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		int update = sqlSession.update("student.deleteById", 17);
+		System.out.println(update);
+		//手动提交
+		sqlSession.commit();
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testDelete() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		Student student = new Student();
+		student.setId(21);
+		int update = sqlSession.update("student.delete", student);
+		System.out.println(update);
+		//手动提交
+		sqlSession.commit();
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testUpdate() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		Student student = new Student();
+		student.setId(20);
+		student.setName("王五");
+		student.setAddress("青岛");
+		int update = sqlSession.update("student.update", student);
+		System.out.println(update);
+		//手动提交
+		sqlSession.commit();
+		sqlSession.close();
+	}
+	
 }

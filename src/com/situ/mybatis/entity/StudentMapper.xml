@@ -5,37 +5,41 @@
   
 <mapper namespace="student">
 	<!-- 通过id查找学生 -->
-	<select id="findById" parameterType="java.lang.Integer" resultType="com.situ.mybatis.entity.Student">
+	<select id="findById" parameterType="java.lang.Integer" resultType="Student">
 		select * from student where id=#{id}
 	</select>
 	
 	<!-- 查找所有 -->
 	<!--resultType理论上应该是List<Student>,但是只要写List里面的类型就可以了  -->
-	<select id="findAll" resultType="com.situ.mybatis.entity.Student">
+	<select id="findAll" resultType="Student">
 		SELECT * FROM student
 	</select>
 	
 	<!-- 根据名字模糊查找 -->
-	<select id="findByName" parameterType="string" resultType="com.situ.mybatis.entity.Student">
+	<select id="findByName" parameterType="string" resultType="Student">
 		SELECT * FROM student WHERE NAME LIKE '%${value}%'
 	</select>
 	
 	<!-- 添加 -->
-	<insert id="save" parameterType="com.situ.mybatis.entity.Student">
+	<insert id="save" parameterType="Student">
 		INSERT INTO student(NAME,age,gender,address)
 		VALUES(#{name},#{age},#{gender},#{address});
 	</insert>
 	
+	<!-- 根据id删除 -->
+	<delete id="deleteById" parameterType="int">
+		delete from student where id=#{id}
+	</delete>
 	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="Student">
+		delete from student where id=#{id}
+	</delete>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<!-- 更新 -->
+	<update id="update" parameterType="Student">
+		update student
+		set name=#{name},age=#{age},gender=#{gender},address=#{address}
+		where id=#{id}
+	</update>
 </mapper>
