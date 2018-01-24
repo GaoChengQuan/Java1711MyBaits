@@ -5,7 +5,7 @@
   
 <mapper namespace="com.situ.mybatis.dao.IStudentDao">
 	<sql id="studentColums">
-		name,age,gender,address
+		stu_id,stu_name,stu_age,gender,address
 	</sql>
 	
 	<!-- resultMap最终是要将结果映射到Student上，
@@ -80,4 +80,30 @@
 		set name=#{name},age=#{age},gender=#{gender},address=#{address}
 		where id=#{id}
 	</update>
+	
+	
+	<!-- 动态拼接sql -->
+	<select id="findByCondition" parameterType="SearchVO" resultMap="studentMap">
+		select <include refid="studentColums"/> 
+		from student
+		<!-- where 标签可以自动添加where，同时处理sql语句中第一个and关键字 -->
+		<where>
+			<if test="name!=null">
+				and stu_name like '%${name}%'
+			</if>
+			<if test="gender!=null">
+				and gender = #{gender}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

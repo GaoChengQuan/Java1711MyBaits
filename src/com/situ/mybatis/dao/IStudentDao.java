@@ -27,4 +27,6 @@ public interface IStudentDao {
 	public List<Student> findByPage1(Map<String, Integer> map);
 	//查询一共有多少学生
 	public Integer count();
+	
+	public List<Student> findByCondition(SearchVO searchVO);
 }

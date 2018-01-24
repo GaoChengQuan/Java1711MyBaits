@@ -167,4 +167,17 @@ public class MyBatisTest {
 			System.out.println(student);
 		}
 	}
+	
+	@Test
+	public void testFindByCondition() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		SearchVO searchVO = new SearchVO();
+		searchVO.setName("张");
+		searchVO.setGender("男");
+		List<Student> list = studentDao.findByCondition(searchVO);
+		for (Student student : list) {
+			System.out.println(student);
+		}
+	}
 }

@@ -3,14 +3,28 @@ package com.situ.mybatis.vo;
 import com.situ.mybatis.entity.Student;
 
 public class SearchVO {
-	private Student student;
+	private String name;
+	private String gender;
 
-	public Student getStudent() {
-		return student;
+	public String getName() {
+		return name;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchVO [name=" + name + ", gender=" + gender + "]";
 	}
 
 }
