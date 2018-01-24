@@ -9,6 +9,7 @@ import org.junit.validator.PublicClassValidator;
 
 import com.situ.mybatis.entity.Student;
 import com.situ.mybatis.vo.SearchVO;
+import com.situ.mybatis.vo.StudentSearchCondition;
 
 public interface IStudentDao {
 	//接口中的方法名与StudentMapper.xml定义的方法名一致。
@@ -41,7 +42,9 @@ public interface IStudentDao {
 	
 	public List<Student> findBySearchVIOIf(SearchVO searchVO);
 	
-	
-	
+	public int getTotalCountByCondition(StudentSearchCondition condition);
+
+	public List<Student> findPageBeanListByCondition(@Param("condition")StudentSearchCondition condition,
+			@Param("offset") Integer offset);
 	
 }

@@ -18,7 +18,9 @@ import com.situ.mybatis.dao.IStudentDao;
 import com.situ.mybatis.dao.impl.StudentDaoImpl;
 import com.situ.mybatis.entity.Student;
 import com.situ.mybatis.utils.MyBatisUtil;
+import com.situ.mybatis.vo.PageBean;
 import com.situ.mybatis.vo.SearchVO;
+import com.situ.mybatis.vo.StudentSearchCondition;
 
 public class MyBatisTest {
 	@Test

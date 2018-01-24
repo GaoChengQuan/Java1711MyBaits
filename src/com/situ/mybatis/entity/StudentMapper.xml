@@ -222,4 +222,42 @@
 		</where>
 	</select>
 	
+	<select id="getTotalCountByCondition" parameterType="StudentSearchCondition" resultType="int">
+		select count(*)
+		from student
+		<where>
+			<if test="name!=null and name!='' ">
+				and stu_name like '%${name}%'
+			</if>
+			<if test="age!=null ">
+				and stu_age = #{age}
+			</if>
+			<if test="gender!=null and gender!='' ">
+				and stu_gender = #{gender}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findPageBeanListByCondition" resultMap="studentMap">
+		select <include refid="studentColums"/>
+		from student
+		<where>
+			<if test="name!=null and name!='' ">
+				and stu_name like '%${name}%'
+			</if>
+			<if test="age!=null ">
+				and stu_age = #{age}
+			</if>
+			<if test="gender!=null and gender!='' ">
+				and stu_gender = #{gender}
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
+	
+	
+	
+	
+	
+	
 </mapper>
