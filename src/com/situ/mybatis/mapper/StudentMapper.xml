@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.situ.mybatis.dao.IStudentDao">
+<mapper namespace="com.situ.mybatis.mapper.StudentMapper">
 	<sql id="studentColums">
-		stu_id,stu_name,stu_age,gender,address
+		id,name,age,gender,address
 	</sql>
 	
 	<!-- resultMap最终是要将结果映射到Student上，
@@ -16,16 +16,16 @@
 		<!-- 映射主键属性：如果有多个字段，则定义多个id-->
 		<!-- property: 主键在pojo中的属性名 -->
 		<!-- column:主键在数据库中的列明  -->
-		<id property="id" column="stu_id"/>
+		<id property="id" column="id"/>
 		<!-- result定义普通属性 -->
-		<result property="name" column="stu_name"/>
-		<result property="age" column="stu_age"/>
+		<result property="name" column="name"/>
+		<result property="age" column="age"/>
 		<result property="gender" column="gender"/>
 	</resultMap>
 
 	<!-- 查找所有 -->
 	<select id="findAll" resultMap="studentMap">
-		SELECT stu_id,stu_name,stu_age,gender,address FROM student
+		SELECT id,name,age,gender,address FROM student
 	</select>
 
 	<!-- 通过id查找学生  reference-->
@@ -89,7 +89,7 @@
 		<!-- where 标签可以自动添加where，同时处理sql语句中第一个and关键字 -->
 		<where>
 			<if test="name!=null">
-				and stu_name like '%${name}%'
+				and name like '%${name}%'
 			</if>
 			<if test="gender!=null and gender!='' ">
 				and gender = trim(#{gender})
@@ -106,7 +106,7 @@
 		 -->
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name!=null">
-				and stu_name like '%${name}%'
+				and name like '%${name}%'
 			</if>
 			<if test="gender!=null and gender!='' ">
 				and gender = trim(#{gender})
@@ -120,10 +120,10 @@
 		<!-- set标签会自动判断哪一个是最后一个字段，最自动去掉最后一个的“，” -->
 		<set>
 			<if test="name!=null">
-				stu_name=#{name},
+				name=#{name},
 			</if>
 			<if test="age!=null">
-				stu_age=#{age},
+				age=#{age},
 			</if>
 			<if test="gender!=null">
 				gender=#{gender},
@@ -132,7 +132,7 @@
 				address=#{address},
 			</if>
 		</set>
-		where stu_id=#{id}
+		where id=#{id}
 	</update>
 	
 	<update id="dynamicUpdateTrim" parameterType="Student">
@@ -142,10 +142,10 @@
 		 -->
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="name!=null">
-				stu_name=#{name},
+				name=#{name},
 			</if>
 			<if test="age!=null">
-				stu_age=#{age},
+				age=#{age},
 			</if>
 			<if test="gender!=null">
 				gender=#{gender},
@@ -154,7 +154,7 @@
 				address=#{address},
 			</if>
 		</trim>
-		where stu_id=#{id}
+		where id=#{id}
 	</update>
 	
 	<!-- 根据多个id查询学生信息 -->
@@ -163,7 +163,7 @@
 		select <include refid="studentColums"/>
 		from student
 		<where>
-			stu_id in
+			id in
 			<!-- 下面的foreach就是为了拼接处：(1,2,3,4)
 				foreach用于迭代数组元素
 				open：表示开始符号
@@ -182,7 +182,7 @@
 		select <include refid="studentColums"/>
 		from student
 		<where>
-			stu_id in
+			id in
 			<foreach collection="list" item="id" open="(" close=")" separator="," >
 				#{id}
 			</foreach>
@@ -194,7 +194,7 @@
 		select <include refid="studentColums"/>
 		from student
 		<where>
-			stu_id in
+			id in
 			<foreach collection="idList" item="id" open="(" close=")" separator="," >
 				#{id}
 			</foreach>
@@ -207,10 +207,10 @@
 		<where>
 			<choose>
 				<when test="name!=null and name!='' ">
-					and stu_name like '%${name}%'
+					and name like '%${name}%'
 				</when>
 				<when test="age!=null ">
-					and stu_age = #{age}
+					and age = #{age}
 				</when>
 				<when test="gender!=null and gender!='' ">
 					and gender = #{gender}
@@ -227,15 +227,32 @@
 		from student
 		<where>
 			<if test="name!=null and name!='' ">
-				and stu_name like '%${name}%'
+				and name like '%${name}%'
 			</if>
 			<if test="age!=null ">
-				and stu_age = #{age}
+				and age = #{age}
 			</if>
 			<if test="gender!=null and gender!='' ">
 				and stu_gender = #{gender}
 			</if>
 		</where>
+	</select>
+	
+	<select id="findPageBeanListByCondition1" resultMap="studentMap">
+		select <include refid="studentColums"/>
+		from student
+		<where>
+			<if test="condition.name!=null and condition.name!='' ">
+				and name like '%${condition.name}%'
+			</if>
+			<if test="condition.age!=null ">
+				and age = #{condition.age}
+			</if>
+			<if test="condition.gender!=null and condition.gender!='' ">
+				and stu_gender = #{condition.gender}
+			</if>
+		</where>
+		limit (${condition.pageNo}-1)*${condition.pageSize},${condition.pageSize}
 	</select>
 	
 	<select id="findPageBeanListByCondition" resultMap="studentMap">
@@ -243,21 +260,35 @@
 		from student
 		<where>
 			<if test="name!=null and name!='' ">
-				and stu_name like '%${name}%'
+				and name like '%${name}%'
 			</if>
 			<if test="age!=null ">
-				and stu_age = #{age}
+				and age = #{age}
 			</if>
 			<if test="gender!=null and gender!='' ">
 				and stu_gender = #{gender}
 			</if>
 		</where>
-		limit #{offset},#{pageSize}
+		limit (${pageNo}-1)*#{pageSize},#{pageSize}
 	</select>
 	
+	<resultMap type="Student" id="studentInfoMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="gender" column="gender"/>
+		<result property="address" column="address"/>
+		<association property="banji" javaType="Banji">
+			<id property="id" column="banjiId"/>
+			<result property="name" column="banjiName"/>
+		</association>
+	</resultMap>
 	
-	
-	
+	<select id="findStudentInfoById" parameterType="int" resultMap="studentInfoMap">
+		SELECT s.id,s.name,s.gender,s.address,b.id as banjiId,b.name as banjiName
+		FROM student AS s INNER JOIN banji AS b
+		ON s.banji_id=b.id
+		WHERE s.id=18;
+	</select>
 	
 	
 </mapper>

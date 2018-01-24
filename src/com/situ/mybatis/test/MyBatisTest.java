@@ -14,9 +14,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
-import com.situ.mybatis.dao.IStudentDao;
 import com.situ.mybatis.dao.impl.StudentDaoImpl;
 import com.situ.mybatis.entity.Student;
+import com.situ.mybatis.mapper.StudentMapper;
 import com.situ.mybatis.utils.MyBatisUtil;
 import com.situ.mybatis.vo.PageBean;
 import com.situ.mybatis.vo.SearchVO;
@@ -101,7 +101,7 @@ public class MyBatisTest {
 	
 	@Test
 	public void test1() {
-		IStudentDao studentDao = new StudentDaoImpl();
+		StudentMapper studentDao = new StudentDaoImpl();
 		Student student = studentDao.findById(11);
 		System.out.println(student);
 	}
@@ -110,7 +110,7 @@ public class MyBatisTest {
 	public void test2() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
 		//IStudentDao studentDao = new StudentDaoImpl();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		Student student = studentDao.findById(11);
 		System.out.println(student);
 	}
@@ -118,7 +118,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindBySearchVO() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		SearchVO searchVO = new SearchVO();
 		Student student = new Student();
 		student.setName("李");
@@ -133,7 +133,7 @@ public class MyBatisTest {
 	public void testFindByPage() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
 		//IStudentDao studentDao = new StudentDaoImpl();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("offset", 3);
 		map.put("pageSize", 3);
@@ -146,7 +146,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindByPage1() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		List<Student> list = studentDao.findByPage(3, 3);
 		for (Student stu : list) {
 			System.out.println(stu);
@@ -156,7 +156,7 @@ public class MyBatisTest {
 	@Test
 	public void testCount() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		Integer count = studentDao.count();
 		System.out.println(count);
 	}
@@ -164,7 +164,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindAll2() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		List<Student> list = studentDao.findAll();
 		for (Student student : list) {
 			System.out.println(student);
@@ -174,7 +174,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindByCondition() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		SearchVO searchVO = new SearchVO();
 		searchVO.setName("张");
 		searchVO.setGender("  男   ");
@@ -187,7 +187,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindByConditionTrim() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		SearchVO searchVO = new SearchVO();
 		searchVO.setName("张");
 		searchVO.setGender("   男   ");
@@ -200,7 +200,7 @@ public class MyBatisTest {
 	@Test
 	public void testDynamicUpdate() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		Student student = new Student();
 		student.setId(11);
 		student.setName("lisi");
@@ -214,7 +214,7 @@ public class MyBatisTest {
 	@Test
 	public void testDynamicUpdateTrim() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		Student student = new Student();
 		student.setId(11);
 		student.setName("lisi");
@@ -228,7 +228,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindByIdArray() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		int[] array = {11,16,18};
 		List<Student> list = studentDao.findByIdArray(array);
 		for (Student student : list) {
@@ -239,7 +239,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindByIdList() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		//int[] array = {11,16,18};
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(11);
@@ -254,7 +254,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindBySearchVIO() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(11);
 		list.add(16);
@@ -270,7 +270,7 @@ public class MyBatisTest {
 	@Test
 	public void testFindBySearchVIOIf() {
 		SqlSession sqlSession = MyBatisUtil.getSqlSession();
-		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		StudentMapper studentDao = sqlSession.getMapper(StudentMapper.class);
 		SearchVO searchVO = new SearchVO();
 		//searchVO.setName("张");;
 		//searchVO.setGender("男");

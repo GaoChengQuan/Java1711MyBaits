@@ -5,12 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.situ.mybatis.dao.IStudentDao;
 import com.situ.mybatis.entity.Student;
+import com.situ.mybatis.mapper.StudentMapper;
 import com.situ.mybatis.utils.MyBatisUtil;
 import com.situ.mybatis.vo.SearchVO;
 
-public class StudentDaoImpl implements IStudentDao{
+public class StudentDaoImpl implements StudentMapper{
 
 	@Override
 	public Student findById(Integer id) {

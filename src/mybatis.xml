@@ -34,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<!-- 加载映射文件 -->
 	<mappers>
-		<mapper resource="com/situ/mybatis/entity/StudentMapper.xml"/>
+		<!-- <mapper resource="com/situ/mybatis/entity/StudentMapper.xml"/>
+		<mapper resource="com/situ/mybatis/entity/BanjiMapper.xml"/> -->
+		<!-- 要求Mapper的接口名和Mapper的映射文件名相同，而且在一个包下面 -->
+		<package name="com.situ.mybatis.mapper"/>
 	</mappers>
 	
 </configuration>

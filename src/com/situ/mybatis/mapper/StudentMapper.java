@@ -1,4 +1,4 @@
-package com.situ.mybatis.dao;
+package com.situ.mybatis.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import com.situ.mybatis.entity.Student;
 import com.situ.mybatis.vo.SearchVO;
 import com.situ.mybatis.vo.StudentSearchCondition;
 
-public interface IStudentDao {
+public interface StudentMapper {
 	//接口中的方法名与StudentMapper.xml定义的方法名一致。
 	//参数必须与StudentMapper.xml定义的方法参数一致。
 	//返回值必须与StudentMapper.xml定义方法的返回值一致。
@@ -44,7 +44,10 @@ public interface IStudentDao {
 	
 	public int getTotalCountByCondition(StudentSearchCondition condition);
 
-	public List<Student> findPageBeanListByCondition(@Param("condition")StudentSearchCondition condition,
+	public List<Student> findPageBeanListByCondition1(@Param("condition")StudentSearchCondition condition,
 			@Param("offset") Integer offset);
 	
+	public List<Student> findPageBeanListByCondition(StudentSearchCondition condition);
+	
+	public Student findStudentInfoById(Integer id);
 }

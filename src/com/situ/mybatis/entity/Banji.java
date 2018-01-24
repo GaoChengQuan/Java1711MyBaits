@@ -1,8 +1,12 @@
 package com.situ.mybatis.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Banji {
 	private Integer id;
 	private String name;
+	private List<Student> list = new ArrayList<Student>();
 
 	public Integer getId() {
 		return id;
