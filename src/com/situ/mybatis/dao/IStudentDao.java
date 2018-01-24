@@ -39,6 +39,8 @@ public interface IStudentDao {
 	public List<Student> findByIdList(List<Integer> idList);
 	public List<Student> findBySearchVIO(SearchVO searchVO);
 	
+	public List<Student> findBySearchVIOIf(SearchVO searchVO);
+	
 	
 	
 	

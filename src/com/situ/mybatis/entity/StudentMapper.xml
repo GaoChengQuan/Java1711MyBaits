@@ -92,7 +92,7 @@
 				and stu_name like '%${name}%'
 			</if>
 			<if test="gender!=null and gender!='' ">
-				and gender = #{gender}
+				and gender = trim(#{gender})
 			</if>
 		</where>
 	</select>
@@ -109,7 +109,7 @@
 				and stu_name like '%${name}%'
 			</if>
 			<if test="gender!=null and gender!='' ">
-				and gender = #{gender}
+				and gender = trim(#{gender})
 			</if>
 		</trim>
 	</select>
@@ -201,5 +201,25 @@
 		</where>
 	</select>
 	
+	<select id="findBySearchVIOIf" parameterType="SearchVO" resultMap="studentMap">
+		select <include refid="studentColums"/>
+		from student 
+		<where>
+			<choose>
+				<when test="name!=null and name!='' ">
+					and stu_name like '%${name}%'
+				</when>
+				<when test="age!=null ">
+					and stu_age = #{age}
+				</when>
+				<when test="gender!=null and gender!='' ">
+					and gender = #{gender}
+				</when>
+				<otherwise>
+					and address='青岛'
+				</otherwise>
+			</choose>
+		</where>
+	</select>
 	
 </mapper>

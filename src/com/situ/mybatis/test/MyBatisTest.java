@@ -264,4 +264,18 @@ public class MyBatisTest {
 			System.out.println(student);
 		}
 	}
+	
+	@Test
+	public void testFindBySearchVIOIf() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		SearchVO searchVO = new SearchVO();
+		//searchVO.setName("张");;
+		//searchVO.setGender("男");
+		List<Student> listResult = studentDao.findBySearchVIOIf(searchVO);
+		for (Student student : listResult) {
+			System.out.println(student);
+		}
+	}
+	
 }

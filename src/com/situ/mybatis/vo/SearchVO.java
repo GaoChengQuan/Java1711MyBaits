@@ -10,6 +10,24 @@ public class SearchVO {
 
 	private String name;
 	private String gender;
+	private Integer age;
+	private String address;
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	public int[] getIdArray() {
 		return idArray;
