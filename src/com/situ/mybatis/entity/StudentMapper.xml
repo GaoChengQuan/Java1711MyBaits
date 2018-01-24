@@ -91,19 +91,115 @@
 			<if test="name!=null">
 				and stu_name like '%${name}%'
 			</if>
-			<if test="gender!=null">
+			<if test="gender!=null and gender!='' ">
 				and gender = #{gender}
 			</if>
 		</where>
 	</select>
 	
+	<!-- trim -->
+	<select id="findByConditionTrim" parameterType="SearchVO" resultMap="studentMap">
+		select <include refid="studentColums"/> 
+		from student
+		<!-- prefix:使用前缀
+			  prefixOverrides="AND|OR" :去掉第一个and或者or
+		 -->
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="name!=null">
+				and stu_name like '%${name}%'
+			</if>
+			<if test="gender!=null and gender!='' ">
+				and gender = #{gender}
+			</if>
+		</trim>
+	</select>
 	
+	<!-- 动态更新 -->
+	<update id="dynamicUpdate" parameterType="Student">
+		update student
+		<!-- set标签会自动判断哪一个是最后一个字段，最自动去掉最后一个的“，” -->
+		<set>
+			<if test="name!=null">
+				stu_name=#{name},
+			</if>
+			<if test="age!=null">
+				stu_age=#{age},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+		</set>
+		where stu_id=#{id}
+	</update>
 	
+	<update id="dynamicUpdateTrim" parameterType="Student">
+		update student
+		<!-- prefix:使用前缀
+			suffixOverrides=","  : 去掉最后一个"，"
+		 -->
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name!=null">
+				stu_name=#{name},
+			</if>
+			<if test="age!=null">
+				stu_age=#{age},
+			</if>
+			<if test="gender!=null">
+				gender=#{gender},
+			</if>
+			<if test="address!=null">
+				address=#{address},
+			</if>
+		</trim>
+		where stu_id=#{id}
+	</update>
 	
+	<!-- 根据多个id查询学生信息 -->
+	<select id="findByIdArray" resultMap="studentMap">
+		<!-- select * from student where id in(1,2,3,4); -->
+		select <include refid="studentColums"/>
+		from student
+		<where>
+			stu_id in
+			<!-- 下面的foreach就是为了拼接处：(1,2,3,4)
+				foreach用于迭代数组元素
+				open：表示开始符号
+				close：表示结束符号
+				separator：表示元素间的分隔符
+				item:表示迭代的元素
+			 -->
+			<foreach collection="array" item="id" open="(" close=")" separator="," >
+				#{id}
+			</foreach>
+		</where>
+	</select>
 	
+	<select id="findByIdList" resultMap="studentMap">
+		<!-- select * from student where id in(1,2,3,4); -->
+		select <include refid="studentColums"/>
+		from student
+		<where>
+			stu_id in
+			<foreach collection="list" item="id" open="(" close=")" separator="," >
+				#{id}
+			</foreach>
+		</where>
+	</select>
 	
-	
-	
+	<select id="findBySearchVIO" parameterType="SearchVO" resultMap="studentMap">
+		<!-- select * from student where id in(1,2,3,4); -->
+		select <include refid="studentColums"/>
+		from student
+		<where>
+			stu_id in
+			<foreach collection="idList" item="id" open="(" close=")" separator="," >
+				#{id}
+			</foreach>
+		</where>
+	</select>
 	
 	
 </mapper>

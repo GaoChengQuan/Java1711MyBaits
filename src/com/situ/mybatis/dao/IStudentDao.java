@@ -29,4 +29,17 @@ public interface IStudentDao {
 	public Integer count();
 	
 	public List<Student> findByCondition(SearchVO searchVO);
+	public List<Student> findByConditionTrim(SearchVO searchVO);
+	
+	public Integer dynamicUpdate(Student student);
+	public Integer dynamicUpdateTrim(Student student);
+	
+	
+	public List<Student> findByIdArray(int[] idArray);
+	public List<Student> findByIdList(List<Integer> idList);
+	public List<Student> findBySearchVIO(SearchVO searchVO);
+	
+	
+	
+	
 }

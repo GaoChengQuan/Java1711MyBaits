@@ -2,6 +2,7 @@ package com.situ.mybatis.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -174,9 +175,92 @@ public class MyBatisTest {
 		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
 		SearchVO searchVO = new SearchVO();
 		searchVO.setName("张");
-		searchVO.setGender("男");
+		searchVO.setGender("  男   ");
 		List<Student> list = studentDao.findByCondition(searchVO);
 		for (Student student : list) {
+			System.out.println(student);
+		}
+	}
+	
+	@Test
+	public void testFindByConditionTrim() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		SearchVO searchVO = new SearchVO();
+		searchVO.setName("张");
+		searchVO.setGender("   男   ");
+		List<Student> list = studentDao.findByConditionTrim(searchVO);
+		for (Student student : list) {
+			System.out.println(student);
+		}
+	}
+	
+	@Test
+	public void testDynamicUpdate() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		Student student = new Student();
+		student.setId(11);
+		student.setName("lisi");
+		student.setAddress("北京");
+		Integer count = studentDao.dynamicUpdate(student);
+		System.out.println(count);
+		sqlSession.commit();
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testDynamicUpdateTrim() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		Student student = new Student();
+		student.setId(11);
+		student.setName("lisi");
+		student.setAddress("济南    ");
+		Integer count = studentDao.dynamicUpdateTrim(student);
+		System.out.println(count);
+		sqlSession.commit();
+		sqlSession.close();
+	}
+	
+	@Test
+	public void testFindByIdArray() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		int[] array = {11,16,18};
+		List<Student> list = studentDao.findByIdArray(array);
+		for (Student student : list) {
+			System.out.println(student);
+		}
+	}
+	
+	@Test
+	public void testFindByIdList() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		//int[] array = {11,16,18};
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(11);
+		list.add(16);
+		list.add(18);
+		List<Student> listResult = studentDao.findByIdList(list);
+		for (Student student : listResult) {
+			System.out.println(student);
+		}
+	}
+	
+	@Test
+	public void testFindBySearchVIO() {
+		SqlSession sqlSession = MyBatisUtil.getSqlSession();
+		IStudentDao studentDao = sqlSession.getMapper(IStudentDao.class);
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(11);
+		list.add(16);
+		list.add(18);
+		SearchVO searchVO = new SearchVO();
+		searchVO.setIdList(list);
+		List<Student> listResult = studentDao.findBySearchVIO(searchVO);
+		for (Student student : listResult) {
 			System.out.println(student);
 		}
 	}
