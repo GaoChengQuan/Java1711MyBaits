@@ -278,16 +278,23 @@
 		<result property="gender" column="gender"/>
 		<result property="address" column="address"/>
 		<association property="banji" javaType="Banji">
-			<id property="id" column="banjiId"/>
 			<result property="name" column="banjiName"/>
+			<collection property="courseList" ofType="Course">
+				<result property="name" column="courseName"/>
+				<result property="credit" column="credit"/>
+			</collection>
 		</association>
 	</resultMap>
 	
 	<select id="findStudentInfoById" parameterType="int" resultMap="studentInfoMap">
-		SELECT s.id,s.name,s.gender,s.address,b.id as banjiId,b.name as banjiName
+		SELECT s.id,s.name,s.gender,s.address,b.name AS banjiName,c.NAME AS courseName,c.credit
 		FROM student AS s INNER JOIN banji AS b
 		ON s.banji_id=b.id
-		WHERE s.id=18;
+		INNER JOIN banji_course AS bc 
+		ON b.id=bc.banji_id
+		INNER JOIN course AS c
+		ON c.id=bc.course_id
+		WHERE s.id=#{studentId};
 	</select>
 	
 	

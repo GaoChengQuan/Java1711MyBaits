@@ -50,4 +50,5 @@ public interface StudentMapper {
 	public List<Student> findPageBeanListByCondition(StudentSearchCondition condition);
 	
 	public Student findStudentInfoById(Integer id);
+	
 }

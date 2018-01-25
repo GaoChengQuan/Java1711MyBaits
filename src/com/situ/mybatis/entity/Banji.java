@@ -6,7 +6,17 @@ import java.util.List;
 public class Banji {
 	private Integer id;
 	private String name;
+	private List<Course> courseList = new ArrayList<Course>();
+
 	private List<Student> list = new ArrayList<Student>();
+
+	public List<Course> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
+	}
 
 	public Integer getId() {
 		return id;
@@ -34,7 +44,7 @@ public class Banji {
 
 	@Override
 	public String toString() {
-		return "Banji [id=" + id + ", name=" + name + ", list=" + list + "]";
+		return "Banji [id=" + id + ", name=" + name + ", courseList=" + courseList + ", list=" + list + "]";
 	}
 
 }

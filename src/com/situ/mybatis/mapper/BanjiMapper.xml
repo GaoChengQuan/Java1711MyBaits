@@ -23,4 +23,34 @@
 		WHERE b.id=#{id};
 	</select>
 	
+	<!-- 根据班级名称查询这个班级下面所有学生信息。
+	  select后面查询的字段都是Student里面的，能够一一对应，
+	  只要写resultType="Student" -->
+	<select id="findStudentsByName" parameterType="string" resultType="Student">
+		SELECT s.id,s.name,s.age,s.gender,s.address
+		FROM student AS s INNER JOIN banji AS b
+		ON s.banji_id=b.id
+		WHERE b.name=#{banjiName};
+	</select>
+	
+	<resultMap type="Banji" id="classCourseMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<collection property="courseList" ofType="Course">
+			<id property="id" column="courseId"/>
+			<result property="name" column="courseName"/>
+			<result property="credit" column="credit"/>
+		</collection>
+	</resultMap>
+	
+	<select id="findClassCourseInfoByName" parameterType="string" resultMap="classCourseMap">
+		SELECT b.id,b.NAME,c.id AS courseId,c.name AS courseName,c.credit
+		FROM banji AS b INNER JOIN banji_course AS bc
+		ON b.id=bc.banji_id 
+		INNER JOIN course AS c
+		ON c.id=bc.course_id
+		WHERE b.NAME=#{banjiName};
+	</select>
+	
+	
 </mapper>
