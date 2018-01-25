@@ -24,9 +24,17 @@ public class Banji {
 		this.name = name;
 	}
 
+	public List<Student> getList() {
+		return list;
+	}
+
+	public void setList(List<Student> list) {
+		this.list = list;
+	}
+
 	@Override
 	public String toString() {
-		return "Banji [id=" + id + ", name=" + name + "]";
+		return "Banji [id=" + id + ", name=" + name + ", list=" + list + "]";
 	}
 
 }

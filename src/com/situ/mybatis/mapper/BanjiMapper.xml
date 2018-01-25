@@ -4,6 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.situ.mybatis.mapper.BanjiMapper">
-	
+	<resultMap type="Banji" id="banjiMap">
+		<id property="id" column="banjiId"/>
+		<result property="name" column="banjiName"/>
+		<!-- collection:将关联查询出的学生信息映射到集合中 -->
+		<collection property="list" ofType="Student">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="age" column="age"/>
+			<result property="gender" column="gender"/>
+		</collection>
+	</resultMap>
+
+	<select id="findBanjiInfoById" parameterType="int" resultMap="banjiMap">
+		SELECT b.id AS banjiId,b.name AS banjiName,s.id,s.NAME,s.age,s.gender
+		FROM banji AS b INNER JOIN student AS s
+		ON b.id=s.banji_id
+		WHERE b.id=#{id};
+	</select>
 	
 </mapper>
